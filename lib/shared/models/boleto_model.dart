@@ -67,6 +67,9 @@ class BoletoModel {
 
   @override
   int get hashCode {
-    return name.hashCode ^ dueDate.hashCode ^ value.hashCode ^ barcode.hashCode;
+    return name.hashCode ^ 
+      dueDate.hashCode ^ 
+      value.hashCode ^ 
+      barcode.hashCode;
   }
 }

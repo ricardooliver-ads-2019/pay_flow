@@ -6,11 +6,19 @@ import 'package:pay_flow/shared/themes/app_text_styles.dart';
 class InputTextWidget extends StatelessWidget {
   final String label;
   final IconData icon;
+  final String? initialvalue;
+  final String? Function(String?)? validator;
+  final TextEditingController? controller;
+  final void Function(String value) onChanged;
 
   const InputTextWidget({
     Key? key,
     required this.label,
     required this.icon,
+    this.initialvalue,
+    this.validator,
+    this.controller,
+    required this.onChanged,
   }) : super(key: key);
 
   @override
@@ -20,6 +28,10 @@ class InputTextWidget extends StatelessWidget {
       child: Column(
         children: [
           TextFormField(
+            controller: controller,
+            onChanged: onChanged,
+            initialValue: initialvalue,
+            validator: validator,
             style: AppTextStyles.input,
             decoration: InputDecoration(
               contentPadding: EdgeInsets.zero,
