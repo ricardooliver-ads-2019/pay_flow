@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:pay_flow/shared/models/boleto_model.dart';
+import 'package:pay_flow/shared/themes/app_colors.dart';
 import 'package:pay_flow/shared/themes/app_text_styles.dart';
 
 class BoletoTileWidget extends StatelessWidget {
@@ -13,27 +14,41 @@ class BoletoTileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
-      child: ListTile(
-        contentPadding: EdgeInsets.zero,
-        title: Text(
-          data.name!, 
-          style: AppTextStyles.titleListTile
-        ),
-        subtitle: Text(
-          " Vence em ${data.dueDate}", 
-          style:AppTextStyles.captionBody
-        ),
-        trailing: Text.rich(TextSpan(
-          text: "R\$", 
-          style: AppTextStyles.trailingRegular,
-          children: [
-            TextSpan(
-              text: data.value!.toStringAsFixed(2), 
-              style: AppTextStyles.trailingBold
-            )
-          ]
-        )), 
+      padding: const EdgeInsets.only(left: 10, right: 10),
+      child: Column(
+        children: [
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            title: Text(
+              data.name!, 
+              style: AppTextStyles.titleListTile
+            ),
+            subtitle: Text(
+              " Vence em ${data.dueDate}", 
+              style:AppTextStyles.captionBody
+            ),
+            trailing: Text.rich(TextSpan(
+              text: "R\$", 
+              style: AppTextStyles.trailingRegular,
+              children: [
+                TextSpan(
+                  text: data.value!.toStringAsFixed(2), 
+                  style: AppTextStyles.trailingBold
+                )
+              ]
+            )), 
+
+            
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 2),
+            child: Divider(
+              thickness: 1,
+              height: 1,
+              color: AppColors.stroke,
+            ),
+          ),
+        ],
       ),
     );
   }

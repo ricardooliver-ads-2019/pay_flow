@@ -18,38 +18,28 @@ class _MeusBoletosPageState extends State<MeusBoletosPage> {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 24),
-            child: Row(
-              children: [
-                Text("Meus Boletos", 
-                  style: AppTextStyles.titleBoldHeading,
-                ),
-              ],
-            ),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 24),
-            child: Row(
-              children: [
-                Text("Meus boletos", style: AppTextStyles.titleBoldHeading),
-              ],
+            padding: const EdgeInsets.only(left: 24,top: 24,bottom: 10),
+            child: Container(
+              child: Row(
+                children: [
+                  Text("Meus Boletos", 
+                    style: AppTextStyles.titleBoldHeading,
+                  ),
+                ],
+              ),
             ),
           ),
     
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Divider(
-              color: AppColors.stroke,
+              thickness: 1,
+              height: 1,
+              color: AppColors.primary,
             ),
           ),
     
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: BoletoListWidget(
-              key: UniqueKey(),
-            ),
-          ),
+          BoletoListWidget()
         ],
       ),
     );

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:pay_flow/shared/models/boleto_model.dart';
 import 'package:pay_flow/shared/widgets/boleto_list/boleto_list_controller.dart';
@@ -22,8 +20,7 @@ class _BoletoListWidgetState extends State<BoletoListWidget> {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<List<BoletoModel>>(
-      valueListenable: controller.boletosNotifier, builder: (_,boletos,__) => 
-        Column(
+      valueListenable: controller.boletosNotifier, builder: (_,boletos, __) => Column(
           children:
             boletos.map((e) => BoletoTileWidget(data: e)).toList(),
         )

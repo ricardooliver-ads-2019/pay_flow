@@ -13,13 +13,14 @@ class BoletoListController{
 
   
 
-  void getBoletos() async {
+  Future<void> getBoletos() async {
     try {
       final instace = await SharedPreferences.getInstance();
-      final reponse = instace.getStringList("boletos");
-      boletos= reponse!.map((e) => BoletoModel.fromJson(e)).toList();
-    } catch (e) {
+      final reponse = instace.getStringList("boletos") ?? <String>[];
       
+      boletos= reponse.map((e) => BoletoModel.fromJson(e)).toList();
+    } catch (e) {
+      boletos = <BoletoModel>[];
     }
   }
 
