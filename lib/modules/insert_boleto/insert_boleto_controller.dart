@@ -7,21 +7,24 @@ class InsertBoletoController{
   BoletoModel model= BoletoModel();
 
 
-  String? validateName(String? value)=> value?.isEmpty ?? true ? "O nome do boleto não pode ser vazio": null;
-
-  String? validateVacimento(String? value)=> value?.isEmpty ?? true ? "A data de vencimento não pode ser vazio":null;
-
-  String? validateValor(double value)=> value == 0 ? "Insira um valor maior que R\$ 0,00" : null;
-
-  String? validateCodigo(String? value) => value?.isEmpty ?? true ? "O Código do boleto não pode ser vazio" : null; 
-
+  String? validateName(String? value) =>
+      value?.isEmpty ?? true ? "O nome não pode ser vazio" : null;
+  String? validateVencimento(String? value) =>
+      value?.isEmpty ?? true ? "A data de vencimento não pode ser vazio" : null;
+  String? validateValor(double value) =>
+      value == 0 ? "Insira um valor maior que R\$ 0,00" : null;
+  String? validateCodigo(String? value) =>
+      value?.isEmpty ?? true ? "O código do boleto não pode ser vazio" : null;
+      
   void onChange({
     String? name,
     String? dueDate, 
     double? value, 
     String? barcode,
     }){
-      model = model.copyWith();
+      model = model.copyWith(
+        name: name, dueDate: dueDate, value: value, barcode: barcode
+      );
   }
 
   Future<void> saveBoleto() async{

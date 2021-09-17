@@ -12,26 +12,29 @@ class BoletoTileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      title: Text(
-        data.name!, 
-        style: AppTextStyles.titleListTile
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: ListTile(
+        contentPadding: EdgeInsets.zero,
+        title: Text(
+          data.name!, 
+          style: AppTextStyles.titleListTile
+        ),
+        subtitle: Text(
+          " Vence em ${data.dueDate}", 
+          style:AppTextStyles.captionBody
+        ),
+        trailing: Text.rich(TextSpan(
+          text: "R\$", 
+          style: AppTextStyles.trailingRegular,
+          children: [
+            TextSpan(
+              text: data.value!.toStringAsFixed(2), 
+              style: AppTextStyles.trailingBold
+            )
+          ]
+        )), 
       ),
-      subtitle: Text(
-        " Vence em ${data.dueDate}", 
-        style:AppTextStyles.captionBody
-      ),
-      trailing: Text.rich(TextSpan(
-        text: "R\$", 
-        style: AppTextStyles.trailingRegular,
-        children: [
-          TextSpan(
-            text: "${data.value!.toStringAsFixed(2)}", 
-            style: AppTextStyles.trailingBold
-          )
-        ]
-      )), 
     );
   }
 }

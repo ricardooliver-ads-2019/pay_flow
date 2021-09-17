@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:pay_flow/shared/models/boleto_model.dart';
 import 'package:pay_flow/shared/widgets/boleto_list/boleto_list_controller.dart';
@@ -12,6 +14,11 @@ class BoletoListWidget extends StatefulWidget {
 
 class _BoletoListWidgetState extends State<BoletoListWidget> {
   final controller = BoletoListController();
+  @override
+  void dispose(){
+    controller.dispose();
+   super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<List<BoletoModel>>(

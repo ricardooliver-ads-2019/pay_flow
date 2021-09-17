@@ -21,7 +21,7 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
     controller.getAvailableCameras();
     controller.statusNotifier.addListener(() {
       if (controller.status.hasBarcode) {
-        Navigator.pushReplacementNamed(context, '/insert_boleto');
+        Navigator.pushReplacementNamed(context, '/insert_boleto', arguments: controller.status.barcode);
       }
     });
     super.initState();
@@ -55,6 +55,7 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
             builder: (_, status, __) {
               if (status.showCamera) {
                 return Container(
+                  color: Colors.blue,
                   child: controller.cameraController!.buildPreview(),
                 );
               } else {
@@ -67,12 +68,12 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
             child: Scaffold(
               backgroundColor: Colors.transparent,
               appBar: AppBar(
-                backgroundColor: Colors.red,
+                backgroundColor: Colors.black,
+                centerTitle: true,
                 title: Text(
                   'Escaneie o código de barra do boleto',
                   style: AppTextStyles.buttonBackground,
                 ),
-                centerTitle: true,
                 leading: BackButton(
                   color: AppColors.background,
                 ),
@@ -81,7 +82,7 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
                 children: [
                   Expanded(
                     child: Container(
-                      color: Colors.black.withOpacity(0.6),
+                      color: Colors.black,
                     ),
                   ),
                   Expanded(
@@ -92,43 +93,41 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
                   ),
                   Expanded(
                     child: Container(
-                      color: Colors.black.withOpacity(0.6),
+                      color: Colors.black,
                     ),
                   ),
                 ],
               ),
               bottomNavigationBar: SetLabelButtons(
-                primaryLabel: "Inserir Código do boleto",
-                primaryOnPressed: () {
-                  Navigator.pushReplacementNamed(context, "/insert_boleto");
-                },
-                secondaryLabel: "Adicionar da galeria",
-                secondaryOnPressed: () {},
-              ),
-            ),
+                  labelPrimary: "Inserir código do boleto",
+                  onTapPrimary: () {
+                    
+                  },
+                  labelSecondary: "Adicionar da galeria",
+                  onTapSecondary: controller.scanWithImagePicker,
+                )),
           ),
           ValueListenableBuilder<BarcodeScannerStatus>(
-            valueListenable: controller.statusNotifier,
-            builder: (_, status, __) {
-              if (status.hasError) {
-                return BottonSheetWidget(
-                  title: "Não foi possível identificar um código de barra",
-                  subtitle:
-                      "Tente escanear novamente ou digite o código do boleto",
-                  primaryLabel: "Escanear novamente",
-                  primaryOnPressed: () {
-                    controller.scanWithCamera();
-                  },
-                  secondaryLabel: "Digitar código",
-                  secondaryOnPressed: () {
-                    Navigator.pushReplacementNamed(context, "/insert_boleto");
-                  },
-                );
-              } else {
-                return Container();
-              }
-            },
-          ),
+              valueListenable: controller.statusNotifier,
+              builder: (_, status, __) {
+                if (status.hasError) {
+                  return Align(
+                      alignment: Alignment.bottomLeft,
+                      child: BottomSheetWidget(
+                          labelPrimary: "Escanear novamente",
+                          onTapPrimary: () {
+                            controller.scanWithCamera();
+                          },
+                          labelSecondary: "Digitar código",
+                          onTapSecondary: () {},
+                          title:
+                              "Não foi possível identificar um código de barras.",
+                          subtitle:
+                              "Tente escanear novamente ou digite o código do seu boleto."));
+                } else {
+                  return Container();
+                }
+              }),
         ],
       ),
     );

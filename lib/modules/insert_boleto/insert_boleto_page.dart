@@ -10,7 +10,10 @@ import 'package:pay_flow/shared/widgets/set_lebal_buttons/set_label_buttons.dart
 
 class InsertBoletoPage extends StatefulWidget {
   final String? barcode;
-  const InsertBoletoPage({Key? key, this.barcode}) : super(key: key);
+  const InsertBoletoPage({
+    Key? key,
+    this.barcode,
+  }) : super(key: key);
 
   @override
   _InsertBoletoPageState createState() => _InsertBoletoPageState();
@@ -20,29 +23,26 @@ class _InsertBoletoPageState extends State<InsertBoletoPage> {
   final controller = InsertBoletoController();
 
   final moneyInputTextController = MoneyMaskedTextController(
-    leftSymbol: "R\$",
-    decimalSeparator: ","
-  );
+      leftSymbol: "R\$", initialValue: 0, decimalSeparator: ",");
+  final vencimentoInputTextController =
+      MaskedTextController(mask: "00/00/0000");
+  final codigoInputTextController = TextEditingController();
 
-  final dueDateInputTextController = MaskedTextController(mask: "00/00/0000");
-  final barcodeInputTextController = TextEditingController();
   @override
-
-
-  void initState(){
-    if(widget.barcode!= null){
-      barcodeInputTextController.text = widget.barcode!;
+  void initState() {
+    if (widget.barcode != null) {
+      codigoInputTextController.text = widget.barcode!;
     }
     super.initState();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: AppColors.background,
         elevation: 0,
+        backgroundColor: AppColors.background,
         leading: BackButton(
           color: AppColors.input,
         ),
@@ -54,80 +54,83 @@ class _InsertBoletoPageState extends State<InsertBoletoPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 93, vertical: 24),
-                child: Text("Preencha os dados do boleto", 
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 93, vertical: 24),
+                child: Text(
+                  "Preencha os dados do boleto",
                   style: AppTextStyles.titleBoldHeading,
                   textAlign: TextAlign.center,
                 ),
               ),
-      
-              SizedBox(
-                height: 24,
-              ),
-      
               Form(
                 key: controller.formKey,
                 child: Column(
                   children: [
                     InputTextWidget(
-                      label: "Nome do Boleto",
+                      label: "Nome do boleto",
                       icon: Icons.description_outlined,
-                      validator: controller.validateName,
-                      onChanged: (value){
+                      onChanged: (value) {
                         controller.onChange(name: value);
                       },
+                      validator: controller.validateName,
                     ),
-      
                     InputTextWidget(
-                      controller: dueDateInputTextController,
+                      controller: vencimentoInputTextController,
                       label: "Vencimento",
                       icon: FontAwesomeIcons.timesCircle,
-                      validator: controller.validateVacimento,
-                      onChanged: (value){
+                      onChanged: (value) {
                         controller.onChange(dueDate: value);
                       },
+                      validator: controller.validateVencimento,
                     ),
-      
                     InputTextWidget(
                       controller: moneyInputTextController,
                       label: "Valor",
                       icon: FontAwesomeIcons.wallet,
-                      validator: (_)=> controller.validateValor(
-                          moneyInputTextController.numberValue),
-                      onChanged: (value){
+                      validator: (_) => controller
+                          .validateValor(moneyInputTextController.numberValue),
+                      onChanged: (value) {
                         controller.onChange(
-                            value: moneyInputTextController.numberValue
-                        );
+                            value: moneyInputTextController.numberValue);
                       },
                     ),
-      
                     InputTextWidget(
-                      controller: barcodeInputTextController,
+                      controller: codigoInputTextController,
                       label: "Código",
                       icon: FontAwesomeIcons.barcode,
                       validator: controller.validateCodigo,
-                      onChanged: (value){
+                      onChanged: (value) {
                         controller.onChange(barcode: value);
                       },
-                    ),
+                    )
                   ],
-                )
+                ),
               )
             ],
           ),
         ),
       ),
-      bottomNavigationBar: SetLabelButtons(
-        enableSecondaryColor: true,
-        primaryLabel: "Cancelar",
-        primaryOnPressed:(){
-          Navigator.pop(context);
-        },
-        secondaryLabel: "Cadastrar",
-        secondaryOnPressed: ()async{
-          await controller.cadastrarBoleto();
-          Navigator.pop(context);
-        },
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Divider(
+            height: 1,
+            thickness: 1,
+            color: AppColors.stroke,
+          ),
+          SetLabelButtons(
+            enableSecondaryColor: true,
+            labelPrimary: "Cancelar",
+            onTapPrimary: () {
+              Navigator.pop(context);
+            },
+            labelSecondary: "Cadastrar",
+            onTapSecondary: () async {
+              await controller.cadastrarBoleto();
+              Navigator.pop(context);
+            },
+          ),
+        ],
       ),
     );
   }
