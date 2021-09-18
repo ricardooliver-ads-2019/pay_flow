@@ -127,7 +127,61 @@ class _InsertBoletoPageState extends State<InsertBoletoPage> {
             labelSecondary: "Cadastrar",
             onTapSecondary: () async {
               await controller.cadastrarBoleto();
-              Navigator.pop(context);
+              if (controller.respSaveBoleto == false) {
+                print(controller.respSaveBoleto);
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  backgroundColor: AppColors.stroke,
+                  content: Container(
+                    height: 120,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 15),
+                          child: Text("Não foi possivel cadastar o boleto!", 
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.red),
+                          ),
+                        ),
+
+                        Icon(Icons.sentiment_dissatisfied_outlined, size: 50, color: Colors.red,)
+                      ],
+                    ),
+                  )
+                )
+                );
+              } else {
+                
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  backgroundColor: AppColors.stroke,
+                  content: Container(
+                    height: 120,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 15),
+                          child: Text("Boleto Cadastrado com Sucesso!", 
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.red),
+                          ),
+                        ),
+
+                        Row(
+                          children: [
+                            Icon(Icons.sentiment_very_satisfied, size: 50, color: Colors.red,),
+                            Icon(Icons.check, size: 50, color: Colors.red,),
+
+                          ],
+                        )
+                      ],
+                    ),
+                  )
+                )
+                );
+                Navigator.pop(context);
+              }
+              
             },
           ),
         ],

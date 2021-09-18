@@ -1,3 +1,4 @@
+import 'package:animated_card/animated_card.dart';
 import 'package:flutter/material.dart';
 
 import 'package:pay_flow/shared/models/boleto_model.dart';
@@ -13,11 +14,12 @@ class BoletoTileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 10, right: 10),
-      child: Column(
-        children: [
-          ListTile(
+    return Column(
+      children: [
+        AnimatedCard(
+          direction: AnimatedCardDirection.right,
+          duration: Duration(seconds: 2),
+          child: ListTile(
             contentPadding: EdgeInsets.zero,
             title: Text(
               data.name!, 
@@ -37,19 +39,19 @@ class BoletoTileWidget extends StatelessWidget {
                 )
               ]
             )), 
-
+        
             
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 2),
-            child: Divider(
-              thickness: 1,
-              height: 1,
-              color: AppColors.stroke,
-            ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 2),
+          child: Divider(
+            thickness: 1,
+            height: 1,
+            color: AppColors.stroke,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

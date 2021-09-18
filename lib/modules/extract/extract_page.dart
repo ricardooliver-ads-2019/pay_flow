@@ -1,4 +1,3 @@
-import 'package:animated_card/animated_card.dart';
 import 'package:flutter/material.dart';
 import 'package:pay_flow/shared/models/boleto_model.dart';
 import 'package:pay_flow/shared/themes/app_colors.dart';
@@ -7,14 +6,14 @@ import 'package:pay_flow/shared/widgets/boleto_info/boleto_info_widget.dart';
 import 'package:pay_flow/shared/widgets/boleto_list/boleto_list_controller.dart';
 import 'package:pay_flow/shared/widgets/boleto_list/boleto_list_widget.dart';
 
-class MeusBoletosPage extends StatefulWidget {
-  const MeusBoletosPage({ Key? key }) : super(key: key);
+class ExtractPagePage extends StatefulWidget {
+  const ExtractPagePage({ Key? key }) : super(key: key);
 
   @override
-  _MeusBoletosPageState createState() => _MeusBoletosPageState();
+  _ExtractPagePageState createState() => _ExtractPagePageState();
 }
 
-class _MeusBoletosPageState extends State<MeusBoletosPage> {
+class _ExtractPagePageState extends State<ExtractPagePage> {
   final controller = BoletoListController();
 
   @override
@@ -22,29 +21,12 @@ class _MeusBoletosPageState extends State<MeusBoletosPage> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Stack(
-            children: [
-              Container(
-                color: AppColors.primary,
-                height: 40,
-                width: double.maxFinite,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: ValueListenableBuilder<List<BoletoModel>>(valueListenable: controller.boletosNotifier,
-                builder: (_,boletos,__) => AnimatedCard(
-                  direction: AnimatedCardDirection.top,
-                  duration: Duration(seconds: 2),
-                  child: BoletoInfoWidget(size: boletos.length)),),
-              )
-            ],
-          ),
           Padding(
             padding: const EdgeInsets.only(top: 24, left: 24, right: 24, bottom: 10),
             child: Container(
               child: Row(
                 children: [
-                  Text("Meus Boletos", 
+                  Text("Meus Extratos", 
                     style: AppTextStyles.titleBoldHeading,
                   ),
                 ],

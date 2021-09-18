@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class InsertBoletoController{
   final formKey = GlobalKey<FormState>();
   BoletoModel model= BoletoModel();
+  bool respSaveBoleto = false;
 
 
   String? validateName(String? value) =>
@@ -33,6 +34,7 @@ class InsertBoletoController{
       final boletos = instance.getStringList("boletos") ?? <String>[];
       boletos.add(model.toJson());
       await instance.setStringList("boletos", boletos);
+      respSaveBoleto = true;
       return;
    
     
@@ -42,7 +44,7 @@ class InsertBoletoController{
   Future<void> cadastrarBoleto() async{
     final form = formKey.currentState;
     if(form!.validate()){
-      return saveBoleto();
+       return await saveBoleto();
     }
   }
 }

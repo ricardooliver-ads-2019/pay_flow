@@ -101,7 +101,7 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
               bottomNavigationBar: SetLabelButtons(
                   labelPrimary: "Inserir código do boleto",
                   onTapPrimary: () {
-                    
+                    Navigator.pushReplacementNamed(context, '/insert_boleto');
                   },
                   labelSecondary: "Adicionar da galeria",
                   onTapSecondary: controller.scanWithImagePicker,
@@ -110,7 +110,7 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
           ValueListenableBuilder<BarcodeScannerStatus>(
               valueListenable: controller.statusNotifier,
               builder: (_, status, __) {
-                if (status.hasError) {
+                if (!status.hasError) {
                   return Align(
                       alignment: Alignment.bottomLeft,
                       child: BottomSheetWidget(
@@ -119,7 +119,9 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
                             controller.scanWithCamera();
                           },
                           labelSecondary: "Digitar código",
-                          onTapSecondary: () {},
+                          onTapSecondary: () {
+                            Navigator.pushReplacementNamed(context, '/insert_boleto');
+                          },
                           title:
                               "Não foi possível identificar um código de barras.",
                           subtitle:
